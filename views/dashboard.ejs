@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <style>
+        .row-2 {
+            margin-top: 5vh;
+        }
+
+        .row-1 {
+            margin-top: 20vh;
+        }
+
+        a:hover {
+            text-decoration: none;
+        }
+
+        .mycard {
+            font-family: Verdana, sans-serif;
+            color: #222;
+            text-align: center;
+            border-radius: 4px;
+            background: #dff8ff;
+            box-shadow: 0 6px 10px rgba(0, 0, 0, .08), 0 0 6px rgba(0, 0, 0, .05);
+            transition: .3s transform cubic-bezier(.155, 1.105, .295, 1.12), .3s box-shadow, .3s -webkit-transform cubic-bezier(.155, 1.105, .295, 1.12);
+            padding: 14px 80px 18px 36px;
+            cursor: pointer;
+        }
+
+        .mycard:hover {
+            color: #666;
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, .12), 0 4px 8px rgba(0, 0, 0, .06);
+        }
+    </style>
+</head>
+<%- include('partials/title.ejs');-%>
+    <div class="container">
+        <div class="row row-1">
+            <div class="col-md-6">
+                <a href="all-students">
+                    <div class="card mycard">
+                        <div class="card-body">
+                            1. List of students
+                        </div>
+                    </div>
+                </a>
+            </div>
+            <div class="col-md-6">
+                <a href="submitted">
+                <div class="card mycard">
+                    <div class="card-body">
+                        2. Exam Submitted
+                    </div>
+                </div>
+            </a>
+            </div>
+        </div>
+        <div class="row row-2">
+            <div class="col-md-6">
+                <a href="verification-failed">
+                <div class="card mycard">
+                    <div class="card-body">
+                        3. Verification Failed Students
+                    </div>
+                </div>
+                </a>
+            </div>
+            <div class="col-md-6">
+                <a href="absentees">
+                <div class="card mycard">
+                    <div class="card-body">
+                        4. Absentees
+                    </div>
+                </div>
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <%- include('partials/footer.ejs');-%>

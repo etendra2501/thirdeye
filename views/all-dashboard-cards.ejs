@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+    <style>
+        .row,
+        .container {
+            margin: auto;
+            width: 80vw;
+        }
+        .mycard {
+            font-family: Verdana, sans-serif;
+            width: 100vw;
+            margin-top: 3vh;
+            color: #222;
+            border-radius: 4px;
+            text-align: center;
+            background: #fcfcfc;
+            box-shadow: 0 3px 5px rgba(0, 0, 0, .08), 0 0 6px rgba(0, 0, 0, .05);
+            transition: .3s transform cubic-bezier(.155, 1.105, .295, 1.12), .3s box-shadow, .3s -webkit-transform cubic-bezier(.155, 1.105, .295, 1.12);
+            padding: 0;
+            cursor: pointer;
+        }
+
+        .mycard:hover {
+            color: #666;
+            transform: scale(1.02);
+            box-shadow: 0 6px 10px rgba(0, 0, 0, .12), 0 4px 8px rgba(0, 0, 0, .06);
+        }
+        #element-img{
+            margin-left: 10px;
+            border-radius: 50%;
+            height: 3rem;
+            width: 3rem;
+        }
+        .card-body{
+            padding-left: 4%;
+            padding-right: 4%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        h1{
+            width: 100vw;
+            height: 50vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        body{
+            width: 100vw;
+            height: 100vh;
+        }
+    </style>
+</head>
+<%- include('partials/title.ejs');-%> 
+<% if(data.length==0){ %> 
+    <h1>No Students Yet</h1>
+    <% } %>
+<div class="container">
+<% data.forEach((element,i)=>{%>
+        <div class="row">
+            <div class="card mycard">
+                <div class="card-body">
+                    <span id="start">
+                    <%=i+1%>. 
+                    <img id="element-img" src="<%=element.image%>"></span>
+                    <%=element.name%>
+                    <span id="end">
+                    <%=element.phone%></span>
+                </div>
+            </div>
+        </div>
+<%})%>
+    </div>
+
+    <%- include('partials/footer.ejs');-%>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script defer src="face-api.min.js"></script>
+  <script defer src="script.js"></script>
+  <title>3rd Eye</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <style>
+    body{
+      margin: 0;
+      padding: 0;
+      width: 100vw;
+      height: 100vh;
+    }
+    .face-box {
+      margin-top: 15px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column
+    }
+
+    canvas {
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+    input, button, img{
+      margin-top: 10px;
+      margin-bottom: 10px;
+    }
+  </style>
+</head>
+<%- include('partials/title.ejs');-%>
+
+  <div class="face-box">
+  <video id="video" width="500" height="300" muted autoplay></video>
+  <input type="text" id="name" placeholder="Enter Your Name">
+  <button id="savebtn">Save image</button>
+  <input type="file" id="imageUpload">
+  <img src="https://media.sproutsocial.com/uploads/2017/02/10x-featured-social-media-image-size.png" height="100" width="200">
+  </div>
+</body>
+</html>
