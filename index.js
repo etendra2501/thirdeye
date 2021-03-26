@@ -49,7 +49,8 @@ app.use(passport.session());                    //passport
 app.use(methodOverride('_method'));
 app.use(flash());
 
-mongoose.connect("mongodb://localhost:27017/face_recognition", { useNewUrlParser: true, useUnifiedTopology: true });
+// mongoose.connect("mongodb://localhost:27017/face_recognition", { useNewUrlParser: true, useUniJfiedTopology: true });
+mongoose.connect("mongodb+srv://admin:019s9pQgbH7WX40Z@cluster0-byaob.mongodb.net/face_recognition", { useNewUrlParser: true, useUnifiedTopology: true });
 
 
 //==================MongooseSchemasAndModels=======================
