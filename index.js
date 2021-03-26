@@ -195,7 +195,12 @@ function isLoggedIn(req, res, next) {
     }
 }
 
-app.listen(4000, function () {
+let port = process.env.PORT;
+if (port == null || port == "") {
+  port = 4000;
+}
+
+app.listen(port, function () {
     console.log("Listening at port 4000");
     createMatcher();
 });

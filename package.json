@@ -8,6 +8,9 @@
   },
   "author": "",
   "license": "ISC",
+  "engines": {
+    "node": "14.16.0"
+  },
   "dependencies": {
     "@tensorflow/tfjs-node": "^3.3.0",
     "@vladmandic/face-api": "^1.1.5",
