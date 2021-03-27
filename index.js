@@ -18,7 +18,7 @@ app.use(bodyParser.json({ limit: '50mb' }));
 
 const { Canvas, Image, ImageData } = canvas
 faceapi.env.monkeyPatch({ Canvas, Image, ImageData })
-const descriptions = [];
+const LabeledDescriptions = [];
 let faceMatcher;
 
 async function createMatcher() {
@@ -26,15 +26,26 @@ async function createMatcher() {
     await faceapi.nets.faceLandmark68Net.loadFromDisk('./views/models')
     await faceapi.nets.ssdMobilenetv1.loadFromDisk('./views/models')
 
-    for (let i = 1; i < 4; i++) {
-        const img = await canvas.loadImage(`./labeled_images/${i}.jpg`);
-        const detections = await faceapi.detectSingleFace(img).withFaceLandmarks().withFaceDescriptor()
-        descriptions.push(detections.descriptor)
-    }
-    faceMatcher = new faceapi.FaceMatcher(descriptions, 0.6)
+    // for (let i = 1; i < 4; i++) {
+    //     const img = await canvas.loadImage(`./labeled_images/${i}.jpg`);
+    //     const detections = await faceapi.detectSingleFace(img).withFaceLandmarks().withFaceDescriptor()
+    //     descriptions.push(detections.descriptor)
+    // }
+
+    const testFolder = './labeled_images/';
+    const fs = require('fs');
+    let filesArr = fs.readdirSync(testFolder);
+     for (let i = 0; i < filesArr.length; ++i) {
+        //  console.log(testFolder+filesArr[i]);
+            let descriptions = [];
+            const img = await canvas.loadImage(testFolder+filesArr[i]);
+            const detections = await faceapi.detectSingleFace(img).withFaceLandmarks().withFaceDescriptor()
+            descriptions.push(detections.descriptor)
+            LabeledDescriptions.push(new faceapi.LabeledFaceDescriptors(filesArr[i].slice(0,-4),descriptions))
+        }
+    faceMatcher = new faceapi.FaceMatcher(LabeledDescriptions, 0.6)
     console.log(faceMatcher);
 }
-
 
 app.set("view engine", "ejs");
 app.use(express.static(__dirname + '/views'));
@@ -125,6 +136,7 @@ app.get("/logout", function (req, res) {
 
 app.post("/api/img", async function (req, res) {
     const img = await canvas.loadImage(req.body.img);
+    const username = req.body.username;
     const detections = await faceapi.detectSingleFace(img).withFaceLandmarks().withFaceDescriptor()
     if (detections == undefined || detections.length == 0) {
         return res.status(500).json({ "result": "error","detection":"face not clear. Try Again" });
@@ -133,10 +145,12 @@ app.post("/api/img", async function (req, res) {
         // return res.status(200).json({ "result": "ok", "detection": "face detected" });
       const result = faceMatcher.findBestMatch(detections.descriptor)
       if (result.label == "unknown") {
-      return res.status(500).json({ "result": "error", "detection": "Someone Else" }); 
+      return res.status(401).json({ "result": "error", "detection": "Someone Else" }); 
       }
-      else {          
-      return res.status(200).json({ "result": "ok", "detection": result.label }); 
+      else {
+        console.log(result.label,username); 
+        if(result.label==username) return res.status(200).json({ "result": "ok", "detection": result.label });
+        else  return res.status(403).json({ "result": "error", "detection": "Name not verified" });
       }
     }
 });
