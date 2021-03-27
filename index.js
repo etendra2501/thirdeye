@@ -65,7 +65,14 @@ mongoose.connect("mongodb+srv://admin:019s9pQgbH7WX40Z@cluster0-byaob.mongodb.ne
 
 
 //==================MongooseSchemasAndModels=======================
-var userSchema = new mongoose.Schema({ username: String, password: String });
+// var userSchema = new mongoose.Schema({ username: String, password: String });
+var userSchema = new mongoose.Schema({ 
+    username:{ type: String, required: true}, 
+    password:{ type: String},
+    absent:{type: Boolean, default: true},
+    validated:{type: Boolean, default: true},
+    phone:{type: String, default:"+919999999999"}
+});
 userSchema.plugin(passportLocalMongoose);           //passport
 var User = mongoose.model("User", userSchema);
 //==================///MongooseSchemasAndModels=====================
@@ -156,6 +163,18 @@ app.post("/api/img", async function (req, res) {
 });
 //==============///FaceRecognitionAPI=============
 
+
+//=================AllUsersAPI====================
+
+app.post("/api/allUsers", function (req, res) {
+    User.find({}, function (err, allUsers) {
+        if (err) { return res.status(403).json({ "result": "error", "error": err.message });}
+        else { return res.status(200).json({ "result": "ok", "users": allUsers });}
+    });
+});
+
+
+//=============///AllUsersAPI=====================
 app.get("/", isLoggedIn, function (req, res) {
     res.render('face')
 });
